@@ -1,0 +1,12 @@
+FROM php:8.2-apache
+
+# Install mysqli extension for PHP
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+
+# Copy project code to web root
+COPY . /var/www/html/
+
+# Configure Apache port for Railway
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+
+EXPOSE 80
